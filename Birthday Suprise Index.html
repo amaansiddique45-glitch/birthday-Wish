@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff4b8b, #6a5cff);
+}
+
+/* ===== Ribbon Screen ===== */
+#ribbonScreen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1d1d1d, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.ribbon {
+    background: linear-gradient(45deg, #ff2f92, #ff7eb3);
+    padding: 25px 60px;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    border-radius: 6px;
+    animation: pulse 1.5s infinite;
+}
+
+.ribbon::before,
+.ribbon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-style: solid;
+}
+
+.ribbon::before {
+    left: -40px;
+    border-width: 25px 40px 25px 0;
+    border-color: transparent #ff2f92 transparent transparent;
+}
+
+.ribbon::after {
+    right: -40px;
+    border-width: 25px 0 25px 40px;
+    border-color: transparent transparent transparent #ff7eb3;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+/* ===== Birthday Content ===== */
+#content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    animation: none;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+/* ===== Open Animation ===== */
+.open #ribbonScreen {
+    animation: ribbonOpen 1.2s forwards ease-in-out;
+}
+
+.open #content {
+    animation: reveal 1.5s forwards ease-out 0.8s;
+}
+
+@keyframes ribbonOpen {
+    to {
+        opacity: 0;
+        transform: scaleY(0);
+        visibility: hidden;
+    }
+}
+
+@keyframes reveal {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===== Confetti ===== */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    from { transform: translateY(-10vh) rotate(0deg); }
+    to { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* ===== Balloons ===== */
+.balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 45px;
+    height: 60px;
+    border-radius: 50%;
+    animation: float 8s linear infinite;
+    opacity: 0.8;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 40px;
+    background: white;
+    top: 60px;
+    left: 22px;
+}
+
+@keyframes float {
+    to { transform: translateY(-120vh); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Ribbon -->
+<div id="ribbonScreen">
+    <div class="ribbon" onclick="openGift()">
+        🎀 Tap to Open 🎀
+    </div>
+</div>
+
+<!-- Birthday Content -->
+<div id="content">
+    <div class="card">
+        <h1>🎂 Happy Birthday To You 🎉</h1>
+        <p>My Friend 💖<br>
+        May your life be filled with happiness, success & endless smiles ✨</p>
+    </div>
+</div>
+
+<script>
+function openGift() {
+    document.body.classList.add("open");
+    startCelebration();
+}
+
+function startCelebration() {
+    // Confetti
+    for (let i = 0; i < 150; i++) {
+        let c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = `hsl(${Math.random()*360},80%,60%)`;
+        c.style.animationDuration = 3 + Math.random() * 5 + "s";
+        document.body.appendChild(c);
+    }
+
+    // Balloons
+    for (let i = 0; i < 20; i++) {
+        let b = document.createElement("div");
+        b.className = "balloon";
+        b.style.left = Math.random() * 100 + "vw";
+        b.style.background = `hsl(${Math.random()*360},70%,60%)`;
+        b.style.animationDuration = 6 + Math.random() * 6 + "s";
+        document.body.appendChild(b);
+    }
+}
+</script>
+
+</body>
+</html>
