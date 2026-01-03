@@ -44,7 +44,6 @@ body{
   transition:opacity .7s ease, transform .7s ease;
   padding:20px;
 }
-
 .page.active{
   opacity:1;
   transform:translateY(0);
@@ -52,8 +51,17 @@ body{
 }
 
 /* ===== TEXT ===== */
-h1{font-size:2.4rem;color:#4c1d95;text-align:center}
-h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
+h1{
+  font-size:2.4rem;
+  color:#4c1d95;
+  text-align:center;
+}
+h2{
+  margin-top:8px;
+  font-size:1.3rem;
+  color:#6d28d9;
+  text-align:center;
+}
 
 /* ===== BUTTON ===== */
 .button{
@@ -76,7 +84,6 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   background:linear-gradient(135deg,#fde2f3,#e0e7ff);
   z-index:30;
 }
-
 #ribbon{
   padding:18px 60px;
   background:linear-gradient(90deg,#ec4899,#f472b6);
@@ -86,9 +93,7 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   cursor:pointer;
   animation:pulse 2s infinite;
 }
-
 @keyframes pulse{50%{transform:scale(1.05)}}
-
 .ribbon-exit{
   animation:exit .8s forwards ease;
 }
@@ -96,13 +101,14 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   to{opacity:0;transform:scale(1.4)}
 }
 
-/* ===== BOOK PAGE FIX ===== */
+/* ===== PAGE 2 FIX ===== */
 #page2{
   justify-content:flex-start;
   padding-top:40px;
   overflow-y:auto;
 }
 
+/* ===== BOOK ===== */
 .book{
   width:180px;
   height:240px;
@@ -113,7 +119,6 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   cursor:pointer;
   margin-bottom:20px;
 }
-
 .book::before{
   content:"";
   position:absolute;
@@ -123,7 +128,6 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   background:linear-gradient(#b45309,#92400e);
   border-radius:14px 0 0 14px;
 }
-
 .bookCover{
   position:absolute;
   inset:0;
@@ -136,7 +140,7 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
 }
 .bookCover span{font-size:2.2rem}
 
-/* ===== LETTER FIX ===== */
+/* ===== LETTER ===== */
 #letter{
   width:100%;
   max-width:520px;
@@ -147,16 +151,16 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   display:none;
   box-shadow:0 16px 32px rgba(0,0,0,.15);
 }
-
 .letterPage{display:none}
 .letterPage.active{display:block}
 
-/* ===== BALLOON PAGE FIX ===== */
+/* ===== PAGE 3 FIX ===== */
 #page3{
   justify-content:flex-start;
   padding-top:40px;
 }
 
+/* ===== BALLOONS ===== */
 #balloons{
   display:flex;
   flex-wrap:wrap;
@@ -165,7 +169,6 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   margin-top:20px;
   width:100%;
 }
-
 .balloon{
   width:70px;
   height:90px;
@@ -173,7 +176,6 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   cursor:pointer;
   animation:float 4.5s infinite ease-in-out;
 }
-
 @keyframes float{50%{transform:translateY(-14px)}}
 
 /* ===== QUOTE ===== */
@@ -187,7 +189,7 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   box-shadow:0 16px 30px rgba(0,0,0,.2);
 }
 
-/* ===== PETALS ===== */
+/* ===== CELEBRATION ===== */
 .petal{
   position:absolute;
   width:7px;
@@ -201,12 +203,33 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   to{transform:translateY(110vh)}
 }
 
-/* ===== DESKTOP ENHANCEMENT ===== */
+/* ===== DESKTOP SIZE ===== */
 @media(min-width:768px){
   h1{font-size:2.8rem}
   h2{font-size:1.4rem}
   .book{width:190px;height:250px}
   .balloon{width:78px;height:98px}
+}
+
+/* ===== MOBILE VIEW HINT ===== */
+#mobileHint{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.9);
+  color:#333;
+  padding:10px 18px;
+  border-radius:20px;
+  font-size:.9rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .6s ease;
+  z-index:50;
+}
+@media (min-width: 768px){
+  #mobileHint{opacity:1;}
 }
 </style>
 </head>
@@ -286,6 +309,9 @@ h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
   <div id="quoteBox"></div>
 </div>
 
+<!-- MOBILE HINT -->
+<div id="mobileHint">Best viewed on mobile 📱</div>
+
 <script>
 function openRibbon(){
   const r=document.getElementById('ribbonScreen');
@@ -330,6 +356,12 @@ function celebrate(count){
     setTimeout(()=>p.remove(),7000);
   }
 }
+
+// auto-hide mobile hint
+setTimeout(()=>{
+  const h=document.getElementById('mobileHint');
+  if(h) h.style.opacity='0';
+},4000);
 </script>
 
 </body>
