@@ -13,14 +13,20 @@
   font-family:'Poppins',system-ui,sans-serif;
 }
 
+html,body{
+  width:100%;
+  height:100%;
+  overflow-x:hidden;
+}
+
+/* ===== BACKGROUND ===== */
 body{
-  height:100vh;
+  min-height:100svh;
   background:
     radial-gradient(circle at 20% 20%,#fde2f3,transparent 45%),
     radial-gradient(circle at 80% 30%,#e0e7ff,transparent 45%),
     radial-gradient(circle at 50% 80%,#fef3c7,transparent 45%),
     linear-gradient(135deg,#fafafa,#fdf2f8);
-  overflow:hidden;
   color:#2d2d2d;
 }
 
@@ -36,7 +42,9 @@ body{
   transform:translateY(10px);
   pointer-events:none;
   transition:opacity .7s ease, transform .7s ease;
+  padding:20px;
 }
+
 .page.active{
   opacity:1;
   transform:translateY(0);
@@ -44,62 +52,66 @@ body{
 }
 
 /* ===== TEXT ===== */
-h1{font-size:2.6rem;color:#4c1d95}
-h2{margin-top:8px;font-size:1.35rem;color:#6d28d9}
+h1{font-size:2.4rem;color:#4c1d95;text-align:center}
+h2{margin-top:8px;font-size:1.3rem;color:#6d28d9;text-align:center}
 
 /* ===== BUTTON ===== */
 .button{
-  margin-top:32px;
-  padding:12px 34px;
+  margin-top:28px;
+  padding:12px 30px;
   border-radius:30px;
   background:linear-gradient(90deg,#7c3aed,#ec4899);
   color:#fff;
   cursor:pointer;
-  box-shadow:0 12px 24px rgba(0,0,0,.14);
+  box-shadow:0 10px 22px rgba(0,0,0,.14);
 }
 
 /* ===== RIBBON ===== */
 #ribbonScreen{
-  position:absolute;
+  position:fixed;
   inset:0;
   display:flex;
   justify-content:center;
   align-items:center;
   background:linear-gradient(135deg,#fde2f3,#e0e7ff);
-  z-index:20;
+  z-index:30;
 }
 
 #ribbon{
-  padding:20px 80px;
+  padding:18px 60px;
   background:linear-gradient(90deg,#ec4899,#f472b6);
   color:#fff;
   border-radius:50px;
-  font-size:1.4rem;
+  font-size:1.3rem;
   cursor:pointer;
   animation:pulse 2s infinite;
 }
 
-@keyframes pulse{
-  50%{transform:scale(1.05)}
-}
+@keyframes pulse{50%{transform:scale(1.05)}}
 
 .ribbon-exit{
   animation:exit .8s forwards ease;
 }
-
 @keyframes exit{
   to{opacity:0;transform:scale(1.4)}
 }
 
-/* ===== BOOK ===== */
+/* ===== BOOK PAGE FIX ===== */
+#page2{
+  justify-content:flex-start;
+  padding-top:40px;
+  overflow-y:auto;
+}
+
 .book{
-  width:190px;
-  height:250px;
+  width:180px;
+  height:240px;
   background:linear-gradient(135deg,#fde68a,#f59e0b);
   border-radius:14px;
-  box-shadow:0 22px 44px rgba(0,0,0,.22);
+  box-shadow:0 18px 36px rgba(0,0,0,.22);
   position:relative;
   cursor:pointer;
+  margin-bottom:20px;
 }
 
 .book::before{
@@ -122,55 +134,64 @@ h2{margin-top:8px;font-size:1.35rem;color:#6d28d9}
   font-weight:600;
   color:#78350f;
 }
-.bookCover span{font-size:2.4rem}
+.bookCover span{font-size:2.2rem}
 
-/* ===== LETTER ===== */
+/* ===== LETTER FIX ===== */
 #letter{
-  margin-top:28px;
-  background:#fffdf8;
-  padding:30px;
+  width:100%;
   max-width:520px;
+  background:#fffdf8;
+  padding:24px;
   border-radius:16px;
   line-height:1.7;
   display:none;
-  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  box-shadow:0 16px 32px rgba(0,0,0,.15);
 }
+
 .letterPage{display:none}
 .letterPage.active{display:block}
 
-/* ===== BALLOONS ===== */
+/* ===== BALLOON PAGE FIX ===== */
+#page3{
+  justify-content:flex-start;
+  padding-top:40px;
+}
+
 #balloons{
   display:flex;
-  gap:26px;
-  margin-top:26px;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+  margin-top:20px;
+  width:100%;
 }
+
 .balloon{
-  width:78px;
-  height:98px;
+  width:70px;
+  height:90px;
   border-radius:50% 50% 45% 45%;
   cursor:pointer;
   animation:float 4.5s infinite ease-in-out;
 }
-@keyframes float{
-  50%{transform:translateY(-16px)}
-}
+
+@keyframes float{50%{transform:translateY(-14px)}}
 
 /* ===== QUOTE ===== */
 #quoteBox{
-  display:none;
-  margin-top:28px;
+  margin-top:24px;
   background:#fff;
-  padding:24px;
+  padding:20px;
   border-radius:16px;
   max-width:420px;
-  box-shadow:0 20px 36px rgba(0,0,0,.2);
+  display:none;
+  box-shadow:0 16px 30px rgba(0,0,0,.2);
 }
 
 /* ===== PETALS ===== */
 .petal{
   position:absolute;
-  width:8px;
-  height:8px;
+  width:7px;
+  height:7px;
   border-radius:50%;
   opacity:.75;
   animation:fall linear forwards;
@@ -178,6 +199,14 @@ h2{margin-top:8px;font-size:1.35rem;color:#6d28d9}
 @keyframes fall{
   from{transform:translateY(-10vh)}
   to{transform:translateY(110vh)}
+}
+
+/* ===== DESKTOP ENHANCEMENT ===== */
+@media(min-width:768px){
+  h1{font-size:2.8rem}
+  h2{font-size:1.4rem}
+  .book{width:190px;height:250px}
+  .balloon{width:78px;height:98px}
 }
 </style>
 </head>
@@ -259,10 +288,10 @@ h2{margin-top:8px;font-size:1.35rem;color:#6d28d9}
 
 <script>
 function openRibbon(){
-  const ribbon=document.getElementById('ribbonScreen');
-  ribbon.classList.add('ribbon-exit');
-  setTimeout(()=>ribbon.remove(),800);
-  celebrate(50);
+  const r=document.getElementById('ribbonScreen');
+  r.classList.add('ribbon-exit');
+  setTimeout(()=>r.remove(),800);
+  celebrate(40);
 }
 
 function goPage(n){
@@ -286,7 +315,7 @@ document.querySelectorAll('.balloon').forEach(b=>{
     quoteBox.innerText=b.dataset.q;
     b.style.visibility='hidden';
     popped++;
-    if(popped===5) celebrate(80);
+    if(popped===5) celebrate(70);
   }
 });
 
