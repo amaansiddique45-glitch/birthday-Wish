@@ -2,80 +2,141 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday 🎉</title>
+<title>Surprise 🎁</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
 body{
     height:100vh;
-    background:radial-gradient(circle at top,#ff7eb3,#6a5cff);
+    background:radial-gradient(circle at top,#000,#1a0033);
     overflow:hidden;
+    color:#fff;
 }
 
-/* Ribbon Screen */
-#ribbonScreen{
+/* ===== GIFT SCREEN ===== */
+#giftScreen{
     position:absolute;inset:0;
-    background:#000;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
     z-index:10;
 }
-.ribbon{
-    background:linear-gradient(45deg,#ff2f92,#ff7eb3);
-    padding:25px 70px;
-    color:#fff;
-    font-size:1.6rem;
-    font-weight:700;
+
+.gift{
+    width:180px;
+    height:160px;
+    background:linear-gradient(#ff0055,#ff4da6);
+    position:relative;
+    border-radius:10px;
     cursor:pointer;
-    border-radius:6px;
-    animation:pulse 1.5s infinite;
+    animation:float 2s ease-in-out infinite;
 }
-@keyframes pulse{
-    0%{transform:scale(1)}
-    100%{transform:scale(1.1)}
+.gift::before{
+    content:"";
+    position:absolute;
+    width:30px;height:100%;
+    background:#fff;
+    left:50%;transform:translateX(-50%);
+}
+.gift::after{
+    content:"";
+    position:absolute;
+    width:100%;height:30px;
+    background:#fff;
+    top:50%;transform:translateY(-50%);
 }
 
-/* Main Content */
+.bow{
+    position:absolute;
+    top:-30px;left:50%;
+    transform:translateX(-50%);
+    font-size:40px;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-15px)}
+}
+
+.hint{
+    margin-top:25px;
+    font-size:1.1rem;
+    opacity:.8;
+    animation:blink 1.5s infinite;
+}
+@keyframes blink{
+    50%{opacity:.3}
+}
+
+/* ===== CURTAINS ===== */
+.curtain{
+    position:absolute;
+    top:0;
+    width:50%;
+    height:100%;
+    background:linear-gradient(90deg,#7b002c,#ff004f);
+    z-index:5;
+}
+#leftCurtain{left:0}
+#rightCurtain{right:0}
+
+.open #leftCurtain{
+    animation:openLeft 1.2s forwards ease-in-out;
+}
+.open #rightCurtain{
+    animation:openRight 1.2s forwards ease-in-out;
+}
+
+@keyframes openLeft{
+    to{transform:translateX(-100%)}
+}
+@keyframes openRight{
+    to{transform:translateX(100%)}
+}
+
+/* ===== MAIN CONTENT ===== */
 #content{
     position:absolute;inset:0;
     display:flex;
     justify-content:center;
     align-items:center;
-    color:#fff;
     text-align:center;
     opacity:0;
-    transform:scale(.8);
 }
-.card{
-    background:rgba(255,255,255,.15);
-    backdrop-filter:blur(12px);
-    padding:40px;
-    border-radius:20px;
-    box-shadow:0 25px 60px rgba(0,0,0,.4);
+.open #content{
+    animation:reveal 1.5s forwards 1s;
 }
+@keyframes reveal{
+    to{opacity:1}
+}
+
 h1{
-    font-size:3rem;
-    animation:glow 2s infinite alternate;
+    font-size:3.2rem;
+    text-shadow:0 0 30px #ffeb3b;
 }
 h2{
     margin-top:10px;
-    font-size:1.8rem;
-}
-@keyframes glow{
-    from{text-shadow:0 0 10px #fff}
-    to{text-shadow:0 0 30px #ffeb3b}
+    font-size:2rem;
 }
 
-/* Reveal animation */
-.open #ribbonScreen{animation:hide 1s forwards}
-.open #content{animation:show 1.5s forwards 0.6s}
+/* ===== FLASH ===== */
+.flash{
+    position:absolute;
+    inset:0;
+    background:#fff;
+    opacity:0;
+    z-index:9;
+}
+.open .flash{
+    animation:flash 0.4s ease;
+}
+@keyframes flash{
+    50%{opacity:1}
+}
 
-@keyframes hide{to{opacity:0;transform:scaleY(0)}}
-@keyframes show{to{opacity:1;transform:scale(1)}}
-
-/* Confetti */
+/* ===== CONFETTI ===== */
 .confetti{
     position:absolute;
     width:10px;height:10px;
@@ -86,10 +147,8 @@ h2{
     to{transform:translateY(110vh) rotate(360deg)}
 }
 
-/* Fireworks canvas */
 canvas{
-    position:absolute;
-    inset:0;
+    position:absolute;inset:0;
     pointer-events:none;
 }
 </style>
@@ -97,29 +156,33 @@ canvas{
 
 <body>
 
-<!-- Ribbon -->
-<div id="ribbonScreen">
-    <div class="ribbon" onclick="openGift()">🎀 Tap to Open 🎀</div>
+<div id="giftScreen" onclick="openSurprise()">
+    <div class="gift">
+        <div class="bow">🎀</div>
+    </div>
+    <div class="hint">Tap the gift… but wait 👀</div>
 </div>
 
-<!-- Content -->
+<div id="leftCurtain" class="curtain"></div>
+<div id="rightCurtain" class="curtain"></div>
+<div class="flash"></div>
+
 <div id="content">
-    <div class="card">
-        <h1>🎂 Happy Birthday 🎉</h1>
-        <h2>My Friend 💖</h2>
-        <p>May your life shine brighter than fireworks ✨</p>
+    <div>
+        <h1>🎂 HAPPY BIRTHDAY 🎉</h1>
+        <h2>To You, My Friend 💖</h2>
+        <p>Today the world celebrates YOU ✨</p>
     </div>
 </div>
 
 <canvas id="fireworks"></canvas>
 
-<!-- Birthday Music -->
 <audio id="music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
 </audio>
 
 <script>
-function openGift(){
+function openSurprise(){
     document.body.classList.add("open");
     document.getElementById("music").play();
     confetti();
@@ -128,7 +191,7 @@ function openGift(){
 
 /* Confetti */
 function confetti(){
-    for(let i=0;i<150;i++){
+    for(let i=0;i<200;i++){
         let c=document.createElement("div");
         c.className="confetti";
         c.style.left=Math.random()*100+"vw";
@@ -143,24 +206,22 @@ const canvas=document.getElementById("fireworks");
 const ctx=canvas.getContext("2d");
 canvas.width=innerWidth;
 canvas.height=innerHeight;
-
 let particles=[];
 function fireworks(){
     setInterval(()=>{
         let x=Math.random()*canvas.width;
         let y=Math.random()*canvas.height/2;
-        for(let i=0;i<50;i++){
+        for(let i=0;i<60;i++){
             particles.push({
                 x,y,
-                vx:(Math.random()-.5)*6,
-                vy:(Math.random()-.5)*6,
+                vx:(Math.random()-.5)*7,
+                vy:(Math.random()-.5)*7,
                 life:100,
                 color:`hsl(${Math.random()*360},100%,60%)`
             });
         }
-    },800);
+    },700);
 }
-
 function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     particles.forEach((p,i)=>{
@@ -178,4 +239,3 @@ animate();
 
 </body>
 </html>
-
