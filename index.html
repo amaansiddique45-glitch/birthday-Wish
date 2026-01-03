@@ -6,160 +6,91 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{
+    height:100vh;
+    background:radial-gradient(circle at top,#ff7eb3,#6a5cff);
+    overflow:hidden;
 }
 
-body {
-    height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(135deg, #ff4b8b, #6a5cff);
+/* Ribbon Screen */
+#ribbonScreen{
+    position:absolute;inset:0;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+}
+.ribbon{
+    background:linear-gradient(45deg,#ff2f92,#ff7eb3);
+    padding:25px 70px;
+    color:#fff;
+    font-size:1.6rem;
+    font-weight:700;
+    cursor:pointer;
+    border-radius:6px;
+    animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+    0%{transform:scale(1)}
+    100%{transform:scale(1.1)}
 }
 
-/* ===== Ribbon Screen ===== */
-#ribbonScreen {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, #1d1d1d, #000);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
+/* Main Content */
+#content{
+    position:absolute;inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    text-align:center;
+    opacity:0;
+    transform:scale(.8);
+}
+.card{
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(12px);
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 25px 60px rgba(0,0,0,.4);
+}
+h1{
+    font-size:3rem;
+    animation:glow 2s infinite alternate;
+}
+h2{
+    margin-top:10px;
+    font-size:1.8rem;
+}
+@keyframes glow{
+    from{text-shadow:0 0 10px #fff}
+    to{text-shadow:0 0 30px #ffeb3b}
 }
 
-.ribbon {
-    background: linear-gradient(45deg, #ff2f92, #ff7eb3);
-    padding: 25px 60px;
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-    border-radius: 6px;
-    animation: pulse 1.5s infinite;
+/* Reveal animation */
+.open #ribbonScreen{animation:hide 1s forwards}
+.open #content{animation:show 1.5s forwards 0.6s}
+
+@keyframes hide{to{opacity:0;transform:scaleY(0)}}
+@keyframes show{to{opacity:1;transform:scale(1)}}
+
+/* Confetti */
+.confetti{
+    position:absolute;
+    width:10px;height:10px;
+    animation:fall linear infinite;
+}
+@keyframes fall{
+    from{transform:translateY(-10vh) rotate(0)}
+    to{transform:translateY(110vh) rotate(360deg)}
 }
 
-.ribbon::before,
-.ribbon::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border-style: solid;
-}
-
-.ribbon::before {
-    left: -40px;
-    border-width: 25px 40px 25px 0;
-    border-color: transparent #ff2f92 transparent transparent;
-}
-
-.ribbon::after {
-    right: -40px;
-    border-width: 25px 0 25px 40px;
-    border-color: transparent transparent transparent #ff7eb3;
-}
-
-@keyframes pulse {
-    from { transform: scale(1); }
-    to { transform: scale(1.1); }
-}
-
-/* ===== Birthday Content ===== */
-#content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    opacity: 0;
-    transform: scale(0.8);
-}
-
-.card {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(12px);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-    animation: none;
-}
-
-h1 {
-    font-size: 3rem;
-    margin-bottom: 15px;
-}
-
-p {
-    font-size: 1.2rem;
-}
-
-/* ===== Open Animation ===== */
-.open #ribbonScreen {
-    animation: ribbonOpen 1.2s forwards ease-in-out;
-}
-
-.open #content {
-    animation: reveal 1.5s forwards ease-out 0.8s;
-}
-
-@keyframes ribbonOpen {
-    to {
-        opacity: 0;
-        transform: scaleY(0);
-        visibility: hidden;
-    }
-}
-
-@keyframes reveal {
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* ===== Confetti ===== */
-.confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: red;
-    animation: fall linear infinite;
-}
-
-@keyframes fall {
-    from { transform: translateY(-10vh) rotate(0deg); }
-    to { transform: translateY(110vh) rotate(360deg); }
-}
-
-/* ===== Balloons ===== */
-.balloon {
-    position: absolute;
-    bottom: -150px;
-    width: 45px;
-    height: 60px;
-    border-radius: 50%;
-    animation: float 8s linear infinite;
-    opacity: 0.8;
-}
-
-.balloon::after {
-    content: "";
-    position: absolute;
-    width: 2px;
-    height: 40px;
-    background: white;
-    top: 60px;
-    left: 22px;
-}
-
-@keyframes float {
-    to { transform: translateY(-120vh); }
+/* Fireworks canvas */
+canvas{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
 }
 </style>
 </head>
@@ -168,48 +99,83 @@ p {
 
 <!-- Ribbon -->
 <div id="ribbonScreen">
-    <div class="ribbon" onclick="openGift()">
-        🎀 Tap to Open 🎀
-    </div>
+    <div class="ribbon" onclick="openGift()">🎀 Tap to Open 🎀</div>
 </div>
 
-<!-- Birthday Content -->
+<!-- Content -->
 <div id="content">
     <div class="card">
-        <h1>🎂 Happy Birthday To You 🎉</h1>
-        <p>My Friend 💖<br>
-        May your life be filled with happiness, success & endless smiles ✨</p>
+        <h1>🎂 Happy Birthday 🎉</h1>
+        <h2>My Friend 💖</h2>
+        <p>May your life shine brighter than fireworks ✨</p>
     </div>
 </div>
 
+<canvas id="fireworks"></canvas>
+
+<!-- Birthday Music -->
+<audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-function openGift() {
+function openGift(){
     document.body.classList.add("open");
-    startCelebration();
+    document.getElementById("music").play();
+    confetti();
+    fireworks();
 }
 
-function startCelebration() {
-    // Confetti
-    for (let i = 0; i < 150; i++) {
-        let c = document.createElement("div");
-        c.className = "confetti";
-        c.style.left = Math.random() * 100 + "vw";
-        c.style.background = `hsl(${Math.random()*360},80%,60%)`;
-        c.style.animationDuration = 3 + Math.random() * 5 + "s";
+/* Confetti */
+function confetti(){
+    for(let i=0;i<150;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.background=`hsl(${Math.random()*360},80%,60%)`;
+        c.style.animationDuration=3+Math.random()*5+"s";
         document.body.appendChild(c);
     }
-
-    // Balloons
-    for (let i = 0; i < 20; i++) {
-        let b = document.createElement("div");
-        b.className = "balloon";
-        b.style.left = Math.random() * 100 + "vw";
-        b.style.background = `hsl(${Math.random()*360},70%,60%)`;
-        b.style.animationDuration = 6 + Math.random() * 6 + "s";
-        document.body.appendChild(b);
-    }
 }
+
+/* Fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let particles=[];
+function fireworks(){
+    setInterval(()=>{
+        let x=Math.random()*canvas.width;
+        let y=Math.random()*canvas.height/2;
+        for(let i=0;i<50;i++){
+            particles.push({
+                x,y,
+                vx:(Math.random()-.5)*6,
+                vy:(Math.random()-.5)*6,
+                life:100,
+                color:`hsl(${Math.random()*360},100%,60%)`
+            });
+        }
+    },800);
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i)=>{
+        p.x+=p.vx;
+        p.y+=p.vy;
+        p.life--;
+        ctx.fillStyle=p.color;
+        ctx.fillRect(p.x,p.y,3,3);
+        if(p.life<=0)particles.splice(i,1);
+    });
+    requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>
 </html>
+
