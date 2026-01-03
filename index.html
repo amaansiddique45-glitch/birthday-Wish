@@ -2,239 +2,305 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Surprise 🎁</title>
+<title>Birthday Experience ✨</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',system-ui,sans-serif;
+}
+
 body{
-    height:100vh;
-    background:radial-gradient(circle at top,#000,#1a0033);
-    overflow:hidden;
-    color:#fff;
+  height:100vh;
+  background:
+    radial-gradient(circle at 20% 20%,#fde2f3,transparent 45%),
+    radial-gradient(circle at 80% 30%,#e0e7ff,transparent 45%),
+    radial-gradient(circle at 50% 80%,#fef3c7,transparent 45%),
+    linear-gradient(135deg,#fafafa,#fdf2f8);
+  overflow:hidden;
+  color:#2d2d2d;
 }
 
-/* ===== GIFT SCREEN ===== */
-#giftScreen{
-    position:absolute;inset:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:10;
+/* ===== PAGE SYSTEM ===== */
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  transform:translateY(10px);
+  pointer-events:none;
+  transition:opacity .7s ease, transform .7s ease;
+}
+.page.active{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
 }
 
-.gift{
-    width:180px;
-    height:160px;
-    background:linear-gradient(#ff0055,#ff4da6);
-    position:relative;
-    border-radius:10px;
-    cursor:pointer;
-    animation:float 2s ease-in-out infinite;
-}
-.gift::before{
-    content:"";
-    position:absolute;
-    width:30px;height:100%;
-    background:#fff;
-    left:50%;transform:translateX(-50%);
-}
-.gift::after{
-    content:"";
-    position:absolute;
-    width:100%;height:30px;
-    background:#fff;
-    top:50%;transform:translateY(-50%);
+/* ===== TEXT ===== */
+h1{font-size:2.6rem;color:#4c1d95}
+h2{margin-top:8px;font-size:1.35rem;color:#6d28d9}
+
+/* ===== BUTTON ===== */
+.button{
+  margin-top:32px;
+  padding:12px 34px;
+  border-radius:30px;
+  background:linear-gradient(90deg,#7c3aed,#ec4899);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 12px 24px rgba(0,0,0,.14);
 }
 
-.bow{
-    position:absolute;
-    top:-30px;left:50%;
-    transform:translateX(-50%);
-    font-size:40px;
+/* ===== RIBBON ===== */
+#ribbonScreen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#fde2f3,#e0e7ff);
+  z-index:20;
 }
 
+#ribbon{
+  padding:20px 80px;
+  background:linear-gradient(90deg,#ec4899,#f472b6);
+  color:#fff;
+  border-radius:50px;
+  font-size:1.4rem;
+  cursor:pointer;
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  50%{transform:scale(1.05)}
+}
+
+.ribbon-exit{
+  animation:exit .8s forwards ease;
+}
+
+@keyframes exit{
+  to{opacity:0;transform:scale(1.4)}
+}
+
+/* ===== BOOK ===== */
+.book{
+  width:190px;
+  height:250px;
+  background:linear-gradient(135deg,#fde68a,#f59e0b);
+  border-radius:14px;
+  box-shadow:0 22px 44px rgba(0,0,0,.22);
+  position:relative;
+  cursor:pointer;
+}
+
+.book::before{
+  content:"";
+  position:absolute;
+  left:0;
+  width:10px;
+  height:100%;
+  background:linear-gradient(#b45309,#92400e);
+  border-radius:14px 0 0 14px;
+}
+
+.bookCover{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-weight:600;
+  color:#78350f;
+}
+.bookCover span{font-size:2.4rem}
+
+/* ===== LETTER ===== */
+#letter{
+  margin-top:28px;
+  background:#fffdf8;
+  padding:30px;
+  max-width:520px;
+  border-radius:16px;
+  line-height:1.7;
+  display:none;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+.letterPage{display:none}
+.letterPage.active{display:block}
+
+/* ===== BALLOONS ===== */
+#balloons{
+  display:flex;
+  gap:26px;
+  margin-top:26px;
+}
+.balloon{
+  width:78px;
+  height:98px;
+  border-radius:50% 50% 45% 45%;
+  cursor:pointer;
+  animation:float 4.5s infinite ease-in-out;
+}
 @keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-15px)}
+  50%{transform:translateY(-16px)}
 }
 
-.hint{
-    margin-top:25px;
-    font-size:1.1rem;
-    opacity:.8;
-    animation:blink 1.5s infinite;
-}
-@keyframes blink{
-    50%{opacity:.3}
-}
-
-/* ===== CURTAINS ===== */
-.curtain{
-    position:absolute;
-    top:0;
-    width:50%;
-    height:100%;
-    background:linear-gradient(90deg,#7b002c,#ff004f);
-    z-index:5;
-}
-#leftCurtain{left:0}
-#rightCurtain{right:0}
-
-.open #leftCurtain{
-    animation:openLeft 1.2s forwards ease-in-out;
-}
-.open #rightCurtain{
-    animation:openRight 1.2s forwards ease-in-out;
+/* ===== QUOTE ===== */
+#quoteBox{
+  display:none;
+  margin-top:28px;
+  background:#fff;
+  padding:24px;
+  border-radius:16px;
+  max-width:420px;
+  box-shadow:0 20px 36px rgba(0,0,0,.2);
 }
 
-@keyframes openLeft{
-    to{transform:translateX(-100%)}
-}
-@keyframes openRight{
-    to{transform:translateX(100%)}
-}
-
-/* ===== MAIN CONTENT ===== */
-#content{
-    position:absolute;inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    opacity:0;
-}
-.open #content{
-    animation:reveal 1.5s forwards 1s;
-}
-@keyframes reveal{
-    to{opacity:1}
-}
-
-h1{
-    font-size:3.2rem;
-    text-shadow:0 0 30px #ffeb3b;
-}
-h2{
-    margin-top:10px;
-    font-size:2rem;
-}
-
-/* ===== FLASH ===== */
-.flash{
-    position:absolute;
-    inset:0;
-    background:#fff;
-    opacity:0;
-    z-index:9;
-}
-.open .flash{
-    animation:flash 0.4s ease;
-}
-@keyframes flash{
-    50%{opacity:1}
-}
-
-/* ===== CONFETTI ===== */
-.confetti{
-    position:absolute;
-    width:10px;height:10px;
-    animation:fall linear infinite;
+/* ===== PETALS ===== */
+.petal{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  opacity:.75;
+  animation:fall linear forwards;
 }
 @keyframes fall{
-    from{transform:translateY(-10vh) rotate(0)}
-    to{transform:translateY(110vh) rotate(360deg)}
-}
-
-canvas{
-    position:absolute;inset:0;
-    pointer-events:none;
+  from{transform:translateY(-10vh)}
+  to{transform:translateY(110vh)}
 }
 </style>
 </head>
 
 <body>
 
-<div id="giftScreen" onclick="openSurprise()">
-    <div class="gift">
-        <div class="bow">🎀</div>
-    </div>
-    <div class="hint">Tap the gift… but wait 👀</div>
+<!-- RIBBON -->
+<div id="ribbonScreen">
+  <div id="ribbon" onclick="openRibbon()">🎀 Tap the Ribbon</div>
 </div>
 
-<div id="leftCurtain" class="curtain"></div>
-<div id="rightCurtain" class="curtain"></div>
-<div class="flash"></div>
-
-<div id="content">
-    <div>
-        <h1>🎂 HAPPY BIRTHDAY 🎉</h1>
-        <h2>To You, My Friend 💖</h2>
-        <p>Today the world celebrates YOU ✨</p>
-    </div>
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <h1>Happy Birthday ✨</h1>
+  <h2>To You, My Friend 🤍</h2>
+  <div class="button" onclick="goPage(2)">Read a Note 📖</div>
 </div>
 
-<canvas id="fireworks"></canvas>
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="book" onclick="openLetter()">
+    <div class="bookCover"><span>🤍</span>A Note</div>
+  </div>
 
-<audio id="music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
-</audio>
+  <div id="letter">
+    <div class="letterPage active" id="l1">
+      <b>Happy Birthday to Someone Truly Special 🤍</b><br><br>
+
+      I hope this year wraps you in happiness, strength, and beautiful surprises
+      and countless little moments that make you smile without even realizing.
+      Never stop believing in yourself — you have the power to achieve everything you dream of.<br><br>
+
+      You’re such a rare mix of kind, caring, sweet, funny, and a little bit crazy 😝
+      and that’s what makes you-YOU.
+      Your presence makes things lighter and happier and I’m genuinely grateful
+      that our paths crossed and that I found such an amazing friend in you.<br><br>
+
+      May you always be surrounded by love, good energy,
+      and people who appreciate you the way you deserve.<br><br>
+
+      With exams are coming up, but I know you’ll absolutely crush them,
+      show them who’s boss 😎<br>
+      Always rooting for you 😉<br><br>
+
+      <div class="button" onclick="nextLetter()">Next</div>
+    </div>
+
+    <div class="letterPage" id="l2">
+      It feels like you were born of the moon,<br>
+      As if you’ve come from some distant world.<br>
+      Crossing mountains, passing beyond the skies,<br><br>
+
+      Divine beauty your body is like marble, untouched and out of reach.
+      You toss your hair; you make people a little sick.<br><br>
+
+      You got a sexy figure drenched in sweat while doing yoga.
+      Your lips are as soft as rose petals,
+      and Your blue eyes sparkle with the beauty of Shatsky Lakes.<br><br>
+
+      The gates of heaven are nothing compared to you.<br><br>
+
+      <div class="button" onclick="goPage(3)">One More Surprise 🎈</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <h1>Pop the Balloons 🎈</h1>
+  <div id="balloons">
+    <div class="balloon" style="background:#ec4899" data-q="You are far more capable than you think."></div>
+    <div class="balloon" style="background:#8b5cf6" data-q="Your kindness quietly changes lives."></div>
+    <div class="balloon" style="background:#06b6d4" data-q="Some people make life lighter by existing."></div>
+    <div class="balloon" style="background:#22c55e" data-q="Never dim yourself. You were meant to shine."></div>
+    <div class="balloon" style="background:#f59e0b" data-q="The world is better with you in it."></div>
+  </div>
+  <div id="quoteBox"></div>
+</div>
 
 <script>
-function openSurprise(){
-    document.body.classList.add("open");
-    document.getElementById("music").play();
-    confetti();
-    fireworks();
+function openRibbon(){
+  const ribbon=document.getElementById('ribbonScreen');
+  ribbon.classList.add('ribbon-exit');
+  setTimeout(()=>ribbon.remove(),800);
+  celebrate(50);
 }
 
-/* Confetti */
-function confetti(){
-    for(let i=0;i<200;i++){
-        let c=document.createElement("div");
-        c.className="confetti";
-        c.style.left=Math.random()*100+"vw";
-        c.style.background=`hsl(${Math.random()*360},80%,60%)`;
-        c.style.animationDuration=3+Math.random()*5+"s";
-        document.body.appendChild(c);
-    }
+function goPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
 }
 
-/* Fireworks */
-const canvas=document.getElementById("fireworks");
-const ctx=canvas.getContext("2d");
-canvas.width=innerWidth;
-canvas.height=innerHeight;
-let particles=[];
-function fireworks(){
-    setInterval(()=>{
-        let x=Math.random()*canvas.width;
-        let y=Math.random()*canvas.height/2;
-        for(let i=0;i<60;i++){
-            particles.push({
-                x,y,
-                vx:(Math.random()-.5)*7,
-                vy:(Math.random()-.5)*7,
-                life:100,
-                color:`hsl(${Math.random()*360},100%,60%)`
-            });
-        }
-    },700);
+function openLetter(){
+  document.getElementById('letter').style.display='block';
 }
-function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach((p,i)=>{
-        p.x+=p.vx;
-        p.y+=p.vy;
-        p.life--;
-        ctx.fillStyle=p.color;
-        ctx.fillRect(p.x,p.y,3,3);
-        if(p.life<=0)particles.splice(i,1);
-    });
-    requestAnimationFrame(animate);
+
+function nextLetter(){
+  l1.classList.remove('active');
+  l2.classList.add('active');
 }
-animate();
+
+let popped=0;
+document.querySelectorAll('.balloon').forEach(b=>{
+  b.onclick=()=>{
+    quoteBox.style.display='block';
+    quoteBox.innerText=b.dataset.q;
+    b.style.visibility='hidden';
+    popped++;
+    if(popped===5) celebrate(80);
+  }
+});
+
+function celebrate(count){
+  for(let i=0;i<count;i++){
+    let p=document.createElement('div');
+    p.className='petal';
+    p.style.left=Math.random()*100+'vw';
+    p.style.background=`hsl(${Math.random()*360},60%,75%)`;
+    p.style.animationDuration=4+Math.random()*3+'s';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),7000);
+  }
+}
 </script>
 
 </body>
